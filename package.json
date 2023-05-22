@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "cd .. && husky install Sports-scheduler/.husk\ny"
+    "prepare": "cd .. && husky install Sports-scheduler/.husky"
   },
   "author": "",
   "license": "ISC",
