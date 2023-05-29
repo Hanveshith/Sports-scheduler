@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Admin</title>
+</head>
+
+<body>
+    <nav class="h-16 bg-blue-700 items-center flex justify-between">
+        <div class="text-white text-2xl">
+            <p class="ml-4">Sports-Scheduler</p>
+        </div>
+        <div class="text-white"> 
+            <a type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600" href="/signout">signout</a> 
+        </div>
+    </nav>
+    <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
+        <div class="m-5">
+            <h1 class=" text-6xl"><%= name %></h1>
+        </div>
+        <div class="m-5">
+            <h1 class="text-2xl">Upcoming Sessions</h1>
+            <% for(let i = 0; i < sessions.length; i++) { %>
+                <div class="border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
+                    <a href="/sport/<%= sessions[i].dataValues.id %>/session"><%= sessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session #<%= sessions[i].dataValues.id %></a>
+                </div>
+            <% } %>
+        </div>
+        
+        
+        
+    </div>
+
+</body>
+</html>

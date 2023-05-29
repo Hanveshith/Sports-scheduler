@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./css/styles.css" rel="stylesheet">
+    <title>Admin</title>
+    <script>
+        var token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+        function cancelSession(id){
+            fetch(`/cancelsession/${id}`,{
+                method: "delete",
+                headers: {"content-Type": "application/json"},
+                body: JSON.stringify({
+                    "_csrf": token
+                })
+            }).then((res) => {
+                if(res.ok){
+                    window.location.href = "/admin";
+                }
+            }).catch((err) => console.log(err))
+        }
+        function JoinSession(id){
+            fetch(`/joinSession/${id}`,{
+                method: "post",
+                headers: {"content-Type": "application/json"},
+                body: JSON.stringify({
+                    "_csrf": token
+                })
+            }).then((res) => {
+                if(res.ok){
+                    window.location.reload();
+                }
+            }).catch((err) => console.log(err))
+        }
+        function LeaveSession(id){
+            fetch(`/leaveSession/${id}`,{
+                method: "post",
+                headers: {"content-Type": "application/json"},
+                body: JSON.stringify({
+                    "_csrf": token
+                })
+            }).then((res) => {
+                if(res.ok){
+                    window.location.reload();
+                }
+            }).catch((err) => console.log(err))
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="h-16 bg-blue-700 items-center flex justify-between">
+        <div class="text-white text-2xl">
+            <p class="ml-4">Sports-Scheduler</p>
+        </div>
+        <div class="text-white">
+            <!-- <button href="/signout" type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600">signout</button> -->
+            <a href="/signout" type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600">signout</a>
+        </div>
+    </nav>
+    <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
+        <div class="m-5">
+            <h1 class=" text-6xl my-10 m-10"><%= name %> Session #<%= sessions[0].dataValues.id %></h1>
+            <div class="my-10 text-2xl m-10">
+                <p>Date and Time: <%= sessions[0].dataValues.DateTime %></p>
+                <p>Venue: <%= sessions[0].dataValues.Venue %></p>
+            </div>
+            <div>
+                <p class="text-4xl">Players</p>
+                <% for(var i=0;i< sessions[0].dataValues.Participants.length;i++) { %>
+                    <div class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-50">
+                        <div class="flex items-center">
+                            <p class="ml-2 players text-xl text-gray-900 "><%= i+1 %>. <%= sessions[0].dataValues.Participants[i] %></p>
+                            <a href="#" class="edit-icon ml-4 opacity-0 hover:opacity-100">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        <% if(getUser.role === "admin" && sessions[0].dataValues.userId == getUser.id) { %>
+            <%= getUser.role %>
+            <div class="m-5">
+                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sportID %>/editsession">Edit Session</a>
+                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sportID %>)">Cancel Session</a>
+            </div>
+            <% }else { %>
+                <div class="m-5">
+                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="JoinSession(<%= sessionid %>)" >Join Session</a>
+                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessionid %>)" >Leave Session</a>
+                </div>
+            <% } %>
+    </div>
+</body>
+</html>

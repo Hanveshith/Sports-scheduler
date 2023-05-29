@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Admin</title>
+</head>
+
+<body>
+    <nav class="h-16 bg-blue-700 items-center flex justify-between">
+        <div class="text-white text-2xl">
+            <p class="ml-4">Sports-Scheduler</p>
+        </div>
+        <div class="text-white">
+            <button type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600">signout</button>
+        </div>
+    </nav>
+    <div class="container m-auto p-auto ">
+        <div class="mt-10">
+            <a href="/">Home</a> >
+        </div>
+        <h2 class="text-3xl text-center mt-10">Create new Sport</h2>
+        <div class="text-center flex-col my-4">
+            <form>
+                <label for="inputsports">Enter Sports Name</label>
+                <input type="text" id="inputsports" class="border border-gray-300  text-gray-900 rounded p-2 w-3/6" placeholder="Enter sports name"/>
+            </form>
+            <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2 my-5">Submit</button>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="h-16 bg-blue-700 items-center flex justify-center">
+        <div class="text-white text-2xl ">
+            <p>Sports-Scheduler</p>
+        </div>
+    </nav>
+
+    <div class="grid grid-cols-6 drop-shadow-xl ">
+        <div class="col-start-3 border-4 p-5 my-5 col-span-2">
+
+            <h1 class="py-4 text-xl">Signup as a new user</h1>
+            <form action="/users" method="post">
+                
+                <div class="py-3">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" placeholder="FirstName" name="firstName" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="py-3">
+                    <label for="lastname">Last Name:</label>
+                    <input type="text" name="lastname" placeholder="LastName" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="pt-2 pb-2">
+                    <label for="">Role:</label>
+                    <div>
+                        <label for="admin">
+                          <input type="radio" name="role" class="" id="admin" value="admin">
+                          Admin
+                        </label>
+                        <label for="player">
+                          <input type="radio" name="role" class="" id="player" value="player">
+                          Player
+                        </label>
+                    </div>
+                <div class="py-3">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" placeholder="Email" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="py-3">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" placeholder="Password" class="border border-gray-300 text-gray-900 rounded p-2 w-full">
+                </div>
+                <div class="py-3">
+                    <p>Already a user?<a class="text-blue-600 hover:underline" href="/login">Login</a></p>
+                </div>
+                <div class="py-3">
+                    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2">Sign Up</button>
+                </div>
+            </form>
+           
+        </div>
+    </div>
+</body>
+</html>
