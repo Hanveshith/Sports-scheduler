@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon -e js,ejs",
     "test": "jest",
-    "prepare": "cd .. && husky install /Sports-scheduler/.husky"
+    "prepare": "cd .. && husky install Sports-scheduler/.husky"
   },
   "lint-staged": {
     "*.js": [
@@ -28,6 +28,7 @@
     "eslint": "^8.41.0",
     "express-session": "^1.17.3",
     "husky": "^8.0.3",
+    "jest": "^29.5.0",
     "lint-staged": "^13.2.2",
     "nodemon": "^2.0.22",
     "passport": "^0.6.0",
