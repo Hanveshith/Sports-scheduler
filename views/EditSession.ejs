@@ -24,27 +24,27 @@
             home
         </div>
 
-        <form action="/sport/<%=sportid%>/editSession" method="post">
+        <form action="/sport/<%=sessions[0].id%>/editSession" method="post">
             <input type="text" name="_csrf" value="<%= csrfToken %>" hidden>
-            <input type="text" name="sportid" value="<%= sportid %>" hidden/>
+            <input type="text" name="sportid" value="<%= sport.id %>" hidden/>
             <h2 class="text-4xl my-10">Edit Session</h2>
-        
+            <%=sessions[0].id%>
         <div>
             <label for="dateandtime">Date and Time of session</label>
-            <input type="datetime-local" value="<%= new Date(session[0].dataValues.DateTime).toISOString().slice(0, 16) %>" id="dateandtime" name="DateTime" class="border-2 mt-2 p-2 rounded w-60 border-lime-750"/>
+            <input type="datetime-local" value="<%= new Date(sessions[0].dataValues.DateTime).toISOString().slice(0, 16) %>" id="dateandtime" name="DateTime" class="border-2 mt-2 p-2 rounded w-60 border-lime-750"/>
 
         </div>
         <div class="mt-2">
             <label for="address">Address of session to be held</label><br>
-            <textarea  id="address" name="venu" cols="50" rows="5" placeholder="Enter Adderss" class="border-2 mt-4 p-2 rounded border-lime-750"><%= session[0].dataValues.Venue %></textarea>
+            <textarea  id="address" name="venu" cols="50" rows="5" placeholder="Enter Adderss" class="border-2 mt-4 p-2 rounded border-lime-750"><%= sessions[0].dataValues.Venue %></textarea>
         </div>
         <div>
             <label for="playes">Players name joining session(comma seperated)</label>
-            <input type="text" id="players" placeholder="Players names" name="players" value="<%= session[0].dataValues.Participants %>" class="border-2 mt-4 p-2 rounded w-3/6 border-lime-750"/>
+            <input type="text" id="players" placeholder="Players names" name="players" value="<%= sessions[0].dataValues.Participants %>" class="border-2 mt-4 p-2 rounded w-3/6 border-lime-750"/>
         </div>
         <div>
             <label for="no_of_playes">Total No. of Players</label>
-            <input type="number" value="<%= session[0].dataValues.no_of_players %>" name="no_of_players" id="no_of_playes" class="border-2 mt-4 p-2 rounded w-20 border-lime-750"/>
+            <input type="number" value="<%= sessions[0].dataValues.no_of_players %>" name="no_of_players" id="no_of_playes" class="border-2 mt-4 p-2 rounded w-20 border-lime-750"/>
         </div>
         <div>
             <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2">Submit</button>

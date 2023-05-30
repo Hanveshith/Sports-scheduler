@@ -15,14 +15,14 @@
             .getAttribute("content");
         function cancelSession(id){
             fetch(`/cancelsession/${id}`,{
-                method: "delete",
+                method: "post",
                 headers: {"content-Type": "application/json"},
                 body: JSON.stringify({
                     "_csrf": token
                 })
             }).then((res) => {
                 if(res.ok){
-                    window.location.href = "/admin";
+                    window.location.href = "/admin"
                 }
             }).catch((err) => console.log(err))
         }
@@ -91,13 +91,14 @@
         <% if(getUser.role === "admin" && sessions[0].dataValues.userId == getUser.id) { %>
             <%= getUser.role %>
             <div class="m-5">
-                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sportID %>/editsession">Edit Session</a>
-                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sportID %>)">Cancel Session</a>
+                <%= sessions[0].dataValues.id %>
+                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sessions[0].dataValues.id %>/editsession">Edit Session</a>
+                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sessions[0].dataValues.id %>)">Cancel Session</a>
             </div>
             <% }else { %>
                 <div class="m-5">
-                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="JoinSession(<%= sessionid %>)" >Join Session</a>
-                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessionid %>)" >Leave Session</a>
+                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="JoinSession(<%= sessions[0].dataValues.id %>)" >Join Session</a>
+                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessions[0].dataValues.id %>)" >Leave Session</a>
                 </div>
             <% } %>
     </div>

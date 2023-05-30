@@ -26,18 +26,21 @@
             <h1>Welcome User</h1>
         </div>
         <div class="py-3 ">
-            <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-3 py-2">Create Sport</button>
-            <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-3 py-2">View Report</button>
+            <a href="/createsport" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-3 py-2">Create Sport</a>
+            <a href="" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-3 py-2">View Report</a>
         </div>
         <hr>
         <div class="mt-6">
-            <h1 class="text-2xl">Created By you</h1>
-            <hr>
-        </div>
-        <div class="mt-6">
             <h1 class="text-2xl">Available sports</h1>
-            <hr>
-        </div>
+            <hr class="my-4">
+            <ul class="list-disc list-inside pl-4">
+              <% for(var i = 0; i < allSports.length; i++) { %>
+                <li class="text-xl text-gray-800">
+                  <a href="/sport/<%= allSports[i].sports_name %>/sessions" ><%= allSports[i].sports_name %></a>
+                </li>
+              <% } %>
+            </ul>
+          </div>           
     </div>
 
 </body>
