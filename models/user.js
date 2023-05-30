@@ -11,6 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Session, {
+        foreignKey: "userId",
+      });
+      User.hasMany(models.Sports, {
+        foreignKey: "userId",
+      });
+    }
+
+    static createuser({firstName,lastName,email,password,role}){
+      return this.create({
+        firstName,lastName,email,password,role
+      })
+    }
+
+    static getUser(id){
+      return this.findByPk(id);
     }
   }
   User.init({

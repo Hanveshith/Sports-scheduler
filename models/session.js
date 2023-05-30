@@ -11,7 +11,63 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Session.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
     }
+
+
+    static createSession({datetime,venue,participants,no_of_players,sportid,sessionvalidity,userId}){
+      return this.create({
+        DateTime: datetime,
+        Venue: venue,
+        Participants: participants,
+        no_of_players,
+        Sports_id: sportid,
+        session_valididty: sessionvalidity,
+        userId,
+      });
+    }
+
+
+    static editSession({datetime,venue,participants,no_of_players,id}){
+      this.update({
+        DateTime: datetime,
+        Venue: venue,
+        Participants: participants,
+        no_of_players,
+      },{
+        where:{
+          id,
+        }
+      })
+      const updatedSession =  this.findOne({
+        where: {
+          id: id,
+        },
+      });
+  
+      return updatedSession;
+    }
+
+
+    static cancelSession({sessionvalidity,id}){
+      return this.update({
+        session_valididty: sessionvalidity,
+      },{
+        where:{
+          id: id,
+        }
+      })
+    }
+    static getSession(sportId){
+      return this.findAll({
+        where:{
+          Sports_id: sportId,
+        },
+      });
+    }
+
   }
   Session.init({
     DateTime: DataTypes.DATE,

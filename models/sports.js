@@ -11,7 +11,37 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Sports.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
     }
+
+    static createSport({sportname,userId}){
+      return this.create({
+        sports_name: sportname,
+        userId,
+      })
+    }
+
+    static async getAllSports() {
+      const allSports = await this.findAll();
+      const uniqueSportSet = new Set();
+      const uniqueSports = [];
+    
+      for (const sport of allSports) {
+        const sportName = sport.sports_name;
+    
+        // Check if the sport name is already in the set
+        if (!uniqueSportSet.has(sportName)) {
+          uniqueSportSet.add(sportName);
+          uniqueSports.push(sport);
+        }
+      }
+    
+      return uniqueSports;
+    }
+    
+
   }
   Sports.init({
     sports_name: DataTypes.STRING
