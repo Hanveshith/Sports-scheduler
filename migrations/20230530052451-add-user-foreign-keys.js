@@ -24,7 +24,6 @@ module.exports = {
     await queryInterface.addColumn("Sports","userId",{
       type: Sequelize.DataTypes.INTEGER,
     });
-
     await queryInterface.addConstraint("Sports",{
       fields: ["userId"],
       type: "foreign key",
@@ -44,5 +43,5 @@ module.exports = {
      */
     await queryInterface.removeColumn("Sessions","userId");
     await queryInterface.removeColumn("Sports","userId");
-  },
+  }
 };
