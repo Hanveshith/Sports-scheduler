@@ -49,6 +49,16 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
     }
+
+    static getSportById(id){
+      return this.findAll({
+        where:{
+          id,
+        }
+      })
+    }
+
+
     static deleteSportByName(name){
       return this.destroy({
         where:{

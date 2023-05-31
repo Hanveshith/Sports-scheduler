@@ -96,6 +96,25 @@ module.exports = (sequelize, DataTypes) => {
     }
 
 
+    static leaveSession({id,participants}){
+      this.update({
+        Participants: participants,
+      },
+      {
+        where: {
+          id: id,
+        }
+      })
+      const updatedSession = this.findOne({
+        where: {
+          id: id,
+        },
+      });
+  
+      return updatedSession;
+    }
+
+
   }
   Session.init({
     DateTime: DataTypes.DATE,
