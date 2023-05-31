@@ -1,13 +1,26 @@
-<div class="mt-6">
-    <h1 class="text-2xl">Created By you</h1>
-    <% for(var i=0; i< allSports.length ;i++) { %>
-        <div class="pt-4 flex-auto">
-            <a>
-                <li>
-                    <%= allSports[i].sports_name %>
-                </li>
-            </a>
-        </div>
-    <% } %>
-    <hr>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Reports</title>
+</head>
+<body>
+    <%- include('header.ejs') %>
+    <div class="mt-6 p-5">
+        <h1 class="text-2xl">Created By you</h1>
+        <% for(var i=0; i< allSports.length ;i++) { %>
+            <div class="pt-4 flex-auto">
+                <a>
+                    <li>
+                        <%= allSports[i].sports_name %>
+                    </li>
+                </a>
+            </div>
+        <% } %>
+        <hr>
+    </div>
+</body>
+</html>

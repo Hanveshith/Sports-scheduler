@@ -56,16 +56,11 @@
 </head>
 
 <body>
-    <nav class="h-16 bg-blue-700 items-center flex justify-between">
-        <div class="text-white text-2xl">
-            <p class="ml-4">Sports-Scheduler</p>
-        </div>
-        <div class="text-white">
-            <!-- <button href="/signout" type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600">signout</button> -->
-            <a href="/signout" type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600">signout</a>
-        </div>
-    </nav>
+    <%- include('header.ejs') %>
     <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
+        <div class="mt-4 text-lg">
+            <a href="/">Home</a> ><a href="/sport/<%= name %>/sessions"> Sport#<%= sport.sports_name %></a> 
+        </div>
         <div class="m-5">
             <h1 class=" text-6xl my-10 m-10"><%= name %> Session #<%= sessions[0].dataValues.id %></h1>
             <div class="my-10 text-2xl m-10">
@@ -93,12 +88,12 @@
                  <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sessions[0].dataValues.id %>/editsession">Edit Session</a>
                  <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sessions[0].dataValues.id %>)">Cancel Session</a>
             </div>
-            <% }else { %>
+            <% }%>
                 <div class="m-5">
                      <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="JoinSession(<%= sessions[0].dataValues.id %>)" >Join Session</a>
                      <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessions[0].dataValues.id %>)" >Leave Session</a>
                 </div>
-            <% } %>
+
     </div>
 </body>
 </html>

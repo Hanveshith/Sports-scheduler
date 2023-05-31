@@ -5,24 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Admin</title>
+    <title>Create Session</title>
     
 </head>
 
 <body>
-    <nav class="h-16 bg-blue-700 items-center flex justify-between">
-        <div class="text-white text-2xl">
-            <p class="ml-4">Sports-Scheduler</p>
-        </div>
-        <div class="text-white">
-            <button type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600">signout</button>
-        </div>
-    </nav>
+    <%- include('header.ejs') %>
     <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
         <div class="m-5">
-        <div class="mt-4">
-            <a href="/">Home</a> ><a href="/createsport">Sport#<%= sport.sports_name %></a> ><a href="/creatingsport">Session#<%= sport.sports_name %>
+        <div class="mt-4 text-lg">
+            <a href="/">Home</a> ><a href="/createsport"> Sport#<%= sport.sports_name %></a> 
         </div>
 
         <form action="/sport/<%= sport.id %>/createsession" method="post">

@@ -5,19 +5,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Admin</title>
 </head>
 
 <body>
-    <nav class="h-16 bg-blue-700 items-center flex justify-between">
-        <div class="text-white text-2xl">
-            <p class="ml-4">Sports-Scheduler</p>
-        </div>
-        <div class="text-white">
-            <button type="submit" class="mr-4 border-2 rounded p-1 hover:bg-blue-600">signout</button> 
-        </div>
-    </nav>
+    <%- include('header.ejs') %>
     <div class="container m-auto p-auto ">
         <div class="mt-10">
             <a href="/">Home</a> >
@@ -28,6 +22,17 @@
         <hr>
         <div class="mt-4">
             <h1 class="text-2xl">Available sports</h1>
+            <hr class="my-4">
+            <ul class="list-disc list-inside pl-4">
+              <% for(var i = 0; i < allSports.length; i++) { %>
+                <li class="text-xl text-gray-800">
+                  <a href="/sport/<%= allSports[i].sports_name %>/sessions" class="text-blue-500 hover:underline"><%= allSports[i].sports_name %></a>
+                  <% if(getUser.id === allSports[i].userId) { %>
+                    <a href="/sport/<%= allSports[i].sports_name %>/edit" class="text-sm text-green-500 ml-2 hover:text-green-700">Edit</a><a href="/sport/<%= allSports[i].sports_name %>/delete" class="text-sm text-red-500 ml-2 hover:text-red-700">Delete</a>
+                  <% } %>
+                </li>
+              <% } %>
+            </ul>
         </div>
     </div>
 
