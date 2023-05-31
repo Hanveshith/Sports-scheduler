@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Admin</title>
+    
 </head>
 
 <body>
@@ -20,8 +21,8 @@
     </nav>
     <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
         <div class="m-5">
-        <div>
-            home
+        <div class="mt-4">
+            <a href="/">Home</a> ><a href="/createsport">Sport#<%= sport.sports_name %></a> ><a href="/creatingsport">Session#<%= sport.sports_name %>
         </div>
 
         <form action="/sport/<%= sport.id %>/createsession" method="post">

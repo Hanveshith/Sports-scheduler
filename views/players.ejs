@@ -89,9 +89,7 @@
             </div>
         </div>
         <% if(getUser.role === "admin" && sessions[0].dataValues.userId == getUser.id) { %>
-            <%= getUser.role %>
             <div class="m-5">
-                <%= sessions[0].dataValues.id %>
                  <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sessions[0].dataValues.id %>/editsession">Edit Session</a>
                  <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sessions[0].dataValues.id %>)">Cancel Session</a>
             </div>
