@@ -60,13 +60,41 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
     }
-    static getSession(sportId){
+    static getSession({sportId}){
       return this.findAll({
         where:{
           Sports_id: sportId,
+          session_valididty: true
         },
       });
     }
+
+    static deleteSessionBySportId({sportId}){
+      return this.destroy({
+        where:{
+          Sports_id: sportId,
+        }
+      })
+    }
+
+    static joinSession({id,participants}){
+      this.update({
+        Participants: participants,
+      },
+      {
+        where: {
+          id: id,
+        }
+      })
+      const updatedSession = this.findOne({
+        where: {
+          id: id,
+        },
+      });
+  
+      return updatedSession;
+    }
+
 
   }
   Session.init({

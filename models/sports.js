@@ -42,6 +42,34 @@ module.exports = (sequelize, DataTypes) => {
     }
     
 
+    static getSportByName(name){
+      return this.findAll({
+        where:{
+          sports_name: name,
+        }
+      })
+    }
+    static deleteSportByName(name){
+      return this.destroy({
+        where:{
+          sports_name: name,
+        }
+      })
+    }
+
+
+    static editSport(name,oldname){
+      return this.update({
+        sports_name: name,
+      },
+      {
+        where:{
+          sports_name: oldname,
+        }
+      }
+      )
+
+    }
   }
   Sports.init({
     sports_name: DataTypes.STRING
