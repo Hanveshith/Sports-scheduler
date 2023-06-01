@@ -93,12 +93,18 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get("/signup", async (request, response) => {
+    if (request.isAuthenticated()) {
+        return response.redirect("/")
+    }
     response.render("signup", {
         csrfToken: request.csrfToken(),
     });
 });
 
 app.get("/login", (request, response) => {
+    if (request.isAuthenticated()) {
+        return response.redirect("/")
+    }
     response.render("login", { csrfToken: request.csrfToken() });
 });
 
@@ -175,7 +181,7 @@ app.post(
 
 app.get("/", (request, response) => {
     if (request.isAuthenticated()) {
-        if (request.user.role == "admin") {
+        if (request.user.role === "admin") {
             response.redirect("/admin");
         } else {
             response.redirect("/user");
@@ -301,7 +307,7 @@ app.post("/sport/:id/createsession", connectEnsureLogin.ensureLoggedIn(), async 
             sessionvalidity: true
         });
         console.log(session);
-        return response.redirect(`/sport/${request.params.id}`);
+        return response.redirect(`/sport/${session.id}`);
     } catch (err) {
         console.log(err);
     }
@@ -311,17 +317,19 @@ app.get("/sport/:id", connectEnsureLogin.ensureLoggedIn(), async (request, respo
     try {
 
         const getUser = await User.findByPk(request.user.id);
-        const sport = await Sports.findByPk(request.params.id);
-        const session = await Session.getSession({ sportId: sport.id });
+        // const sport = await Sports.findByPk(request.params.id);
+        // const session = await Session.getSession({ sportId: sport.id });
+        const session = await Session.findByPk(request.params.id);
+        // const sport = await Sports.getSportById(session.Sports_id);
         
         console.log(session);
-        console.log(sport);
+        // console.log(sport);
         console.log(getUser);
         response.render("players", {
-            sportID: sport.id,
-            name: sport.sports_name,
+            // sportID: sport.id,
+            // name: sport.sports_name,
             getUser,
-            sport,
+            // sport,
             sessions: session,
             messages: request.flash("error"), // Pass the flash error messages to the template
 
@@ -410,7 +418,7 @@ app.post("/joinSession/:id", connectEnsureLogin.ensureLoggedIn(), async (request
     try {
       const sessions = await Session.findByPk(request.params.id);
       const getUser = await User.getUser(request.user.id);
-      const name = getUser.firstName + getUser.lastName;
+      const name = getUser.firstName + getUser.lastName + "(you)";
       const sport1 = await Sports.findByPk(sessions.Sports_id);
       console.log("j", sessions);
       console.log(sessions.Participants);
@@ -431,7 +439,7 @@ app.post("/joinSession/:id", connectEnsureLogin.ensureLoggedIn(), async (request
   
         const sport = await Sports.findByPk(s.Sports_id);
         request.session.save(() => {
-          return response.redirect(`/sport/${sport.id}`);
+          return response.redirect(`/sport/${request.params.id}`);
         });
       }
     } catch (err) {
@@ -444,7 +452,7 @@ app.post("/leaveSession/:id", connectEnsureLogin.ensureLoggedIn(), async (reques
     try {
         const sessions = await Session.findByPk(request.params.id);
         const getUser = await User.getUser(request.user.id);
-        const name = getUser.firstName+getUser.lastName;
+        const name = getUser.firstName+getUser.lastName + "(you)";
         // console.log("j",sessions)
         // console.log(sessions.Participants);
         if (!sessions.Participants.includes(name)) {
@@ -460,7 +468,7 @@ app.post("/leaveSession/:id", connectEnsureLogin.ensureLoggedIn(), async (reques
             const sport = await Sports.findByPk(s.Sports_id);
             // console.log("n",s);
             // console.log(sport)
-            return response.redirect(`/sport/${sport.id}`);
+            return response.redirect(`/sport/${request.params.id}`);
         }
     } catch (err) {
         console.log(err);
