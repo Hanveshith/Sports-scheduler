@@ -219,7 +219,9 @@ app.get(
     async (request, response) => {
         const allSports = await Sports.getAllSports(); 
         const getUser = await User.getUser(request.user.id);
+        const sessions = await Session.findAll();
         response.render("player", {
+            sessions,
             getUser,
             allSports,
             csrfToken: request.csrfToken(),
@@ -228,6 +230,25 @@ app.get(
 );
 
 
+app.get("/changepassword",connectEnsureLogin.ensureLoggedIn(),async(request,response) => {
+    response.render("Changepassword",{
+        csrfToken:request.csrfToken(),
+    });
+});
+
+app.post("/changingpassword",connectEnsureLogin.ensureLoggedIn(),async(request,response) => {
+    const getUser = await User.findByPk(request.user.id);
+    const result = await bcrypt.compare(request.body.oldpassword, getUser.password);
+    if(result){
+        const hashedpwd = await bcrypt.hash(request.body.newpassword, saltRounds);
+        await User.updatePassword(hashedpwd,request.user.id);
+        request.flash('success', 'Password changed successfully');
+        return response.redirect(`/`);
+    }else{
+        request.flash('error', 'Invalid old password');
+        return response.redirect(`/changepassword`);
+    }
+})
 
 app.get(
     "/createsport",
