@@ -13,11 +13,8 @@
 <body>
     <%- include('header.ejs') %>
     <div class="container m-auto p-auto ">
-        <div class="mt-10">
-            <a href="/">Home</a> >
-        </div>
-        <div class=" mx-auto pt-6 mt-3 text-4xl flex ">
-            <h1>Welcome User</h1>
+        <div class=" mx-auto pt-2 mt-3 text-4xl flex ">
+            <h1>Welcome <%= getUser.firstName %></h1>
         </div>
         <hr>
         <div class="mt-4">
@@ -34,6 +31,7 @@
               <% } %>
             </ul>
         </div>
+
     </div>
 
 </body>

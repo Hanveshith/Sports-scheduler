@@ -14,8 +14,8 @@
             <p>Sports-Scheduler</p>
         </div>
     </nav>
-    <div class="grid grid-cols-6 drop-shadow-xl">
-        <div class="col-start-3 border-4 p-5 my-5 col-span-2">
+    <div class="grid grid-cols-6 drop-shadow-xl ">
+        <div class="col-start-3 border-4 p-5 my-5 col-span-2 rounded">
             <h1 class="py-4  text-xl">Login</h1>
             <form action="/session" method="post">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
@@ -31,7 +31,11 @@
                     <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2">Sign in</button>
                 </div>
             </form>
-            
+            <div class="text-center pt-4">
+                <span class="text-gray-600">Don't have an account?</span>
+                <a href="/signup" class="text-blue-600 font-medium ml-2 hover:underline">Sign up</a>
+              </div>
+              <%- include('flashmessages.ejs') %>
         </div>
     </div>
 </body>

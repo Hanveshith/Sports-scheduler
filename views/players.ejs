@@ -57,8 +57,8 @@
 
 <body>
     <%- include('header.ejs') %>
-    <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
-        <div class="mt-4 text-lg">
+    <div class="container m-auto p-auto my-10 drop-shadow-xl border-4 rounded">
+        <div class="mt-4 text-lg p-4">
             <a href="/">Home</a> ><a href="/sport/<%= name %>/sessions"> Sport#<%= sport.sports_name %></a> 
         </div>
         <div class="m-5">
@@ -94,6 +94,9 @@
                      <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessions[0].dataValues.id %>)" >Leave Session</a>
                 </div>
 
+                <%- include('flashmessages.ejs', { messages: messages }) %>
+                
     </div>
+    
 </body>
 </html>
