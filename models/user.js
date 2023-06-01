@@ -28,6 +28,16 @@ module.exports = (sequelize, DataTypes) => {
     static getUser(id){
       return this.findByPk(id);
     }
+
+    static updatePassword(password,id){
+      return this.update({
+        password: password,
+      },{
+        where:{
+          id,
+        }
+      })
+    }
   }
   User.init({
     firstName: DataTypes.STRING,
