@@ -27,7 +27,7 @@
         <% for(var i=0; i< usersessions.length ;i++) { %>
             <% if(usersessions[i].session_valididty === false)  { %>
             <div class="pt-4 flex-auto border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
-                <a href="/sport/<%= usersessions[i].dataValues.Sports_id %>">
+                <a href="/sport/<%= usersessions[i].dataValues.id %>">
                     <%= usersessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session #<%=
                             usersessions[i].dataValues.id %>
                 </a>

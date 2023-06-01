@@ -59,44 +59,41 @@
     <%- include('header.ejs') %>
     <div class="container m-auto p-auto my-10 drop-shadow-xl border-4 rounded">
         <div class="mt-4 text-lg p-4">
-            <a href="/">Home</a> ><a href="/sport/<%= name %>/sessions"> Sport#<%= sport.sports_name %></a> 
+            <a href="/">Home</a>
         </div>
         <div class="m-5">
-            <h1 class=" text-6xl my-10 m-10"><%= name %> Session #<%= sessions[0].dataValues.id %></h1>
+            <h1 class=" text-6xl my-10 m-10">Session #<%= sessions.id %></h1>
             <div class="my-10 text-2xl m-10">
-                <p>Date and Time: <%= sessions[0].dataValues.DateTime %></p>
-                <p>Venue: <%= sessions[0].dataValues.Venue %></p>
+                <p>Date and Time: <%= sessions.DateTime %></p>
+                <p>Venue: <%= sessions.Venue %></p>
             </div>
             <div>
                 <div class="flex">
                     <p class="text-4xl px-4">Players</p> 
-                    <p class="text-2xl mt-2 border-2 px-2 rounded "><%= sessions[0].dataValues.no_of_players-sessions[0].dataValues.Participants.length %> Slots</p>
+                    <p class="text-2xl mt-2 border-2 px-2 rounded "><%= sessions.no_of_players-sessions.Participants.length %> Slots</p>
                 </div>
-                <% for(var i=0;i< sessions[0].dataValues.Participants.length;i++) { %>
+                <% for(var i=0;i< sessions.Participants.length;i++) { %>
                     <div class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-50">
                         <div class="flex items-center">
-                            <p class="ml-2 players text-xl text-gray-900 "><%= i+1 %>. <%= sessions[0].dataValues.Participants[i] %></p>
-                            <a href="#" class="edit-icon ml-4 opacity-0 hover:opacity-100">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                </svg>
-                            </a>
+                            <p class="ml-2 players text-xl text-gray-900 "><%= i+1 %>. <%= sessions.Participants[i] %></p>
+
                         </div>
                     </div>
                 <% } %>
             </div>
         </div>
-        <% if(getUser.role === "admin" && sessions[0].dataValues.userId == getUser.id) { %>
+        <% if(getUser.role === "admin" && sessions.userId == getUser.id && sessions.session_valididty == true) { %>
             <div class="m-5">
-                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sessions[0].dataValues.id %>/editsession">Edit Session</a>
-                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sessions[0].dataValues.id %>)">Cancel Session</a>
+                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sessions.id %>/editsession">Edit Session</a>
+                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sessions.id %>)">Cancel Session</a>
             </div>
             <% }%>
+        <% if(sessions.session_valididty == true) { %>     
                 <div class="m-5">
-                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="JoinSession(<%= sessions[0].dataValues.id %>)" >Join Session</a>
-                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessions[0].dataValues.id %>)" >Leave Session</a>
+                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="JoinSession(<%= sessions.id %>)" >Join Session</a>
+                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessions.id %>)" >Leave Session</a>
                 </div>
-
+        <% } %>
 
     </div>
     
