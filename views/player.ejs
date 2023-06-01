@@ -31,6 +31,23 @@
               <% } %>
             </ul>
         </div>
+        <div class="mt-4">
+            <h1 class="text-2xl">Joined Sessions</h1>
+            <hr class="my-4">
+            <ul class="list-disc list-inside pl-4">
+              <% for(let i=0; i < sessions.length; i++) { %>
+                <% if (sessions[i].Participants.includes(getUser.firstName + getUser.lastName)) { %>
+                <div class="border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
+                    <a href="/sport/<%= sessions[i].dataValues.Sports_id %>">
+                        <%= sessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session
+                            #<%= sessions[i].dataValues.id %>
+                    </a>
+                </div>
+                <% } %>
+                <% } %>
+            </ul>
+        </div>
+
 
     </div>
 

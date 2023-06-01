@@ -68,7 +68,10 @@
                 <p>Venue: <%= sessions[0].dataValues.Venue %></p>
             </div>
             <div>
-                <p class="text-4xl">Players</p>
+                <div class="flex">
+                    <p class="text-4xl px-4">Players</p> 
+                    <p class="text-2xl mt-2 border-2 px-2 rounded "><%= sessions[0].dataValues.no_of_players-sessions[0].dataValues.Participants.length %> Slots</p>
+                </div>
                 <% for(var i=0;i< sessions[0].dataValues.Participants.length;i++) { %>
                     <div class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-50">
                         <div class="flex items-center">
@@ -94,8 +97,7 @@
                      <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessions[0].dataValues.id %>)" >Leave Session</a>
                 </div>
 
-                <%- include('flashmessages.ejs', { messages: messages }) %>
-                
+
     </div>
     
 </body>

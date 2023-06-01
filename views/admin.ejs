@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +8,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>AdminHomepage</title>
 </head>
-
 <body>
     <%- include('header.ejs') %>
     <div class="container m-auto p-auto ">
@@ -40,7 +38,7 @@
         <div class="mt-2">
             <ul class="list-disc list-inside pl-4">
               <% for(var i = 0; i < allSports.length; i++) { %>
-                <% if(getUser.id === allSports[i].userId) { %>
+                <% if(getUser.id == allSports[i].userId) { %>
                 <li class="text-xl text-gray-800">
                   <a href="/sport/<%= allSports[i].sports_name %>/sessions" class="text-blue-500 hover:underline"><%= allSports[i].sports_name %></a>
                     <a href="/sport/<%= allSports[i].sports_name %>/edit" class="text-sm text-green-500 ml-2 hover:text-green-700">Edit</a>
