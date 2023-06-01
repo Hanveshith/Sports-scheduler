@@ -60,6 +60,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
     }
+    static getSessionByUserId(id){
+      return this.findAll({
+        where: {
+          userId: id,
+        }
+      })
+    }
+
     static getSession({sportId}){
       return this.findAll({
         where:{
