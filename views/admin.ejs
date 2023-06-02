@@ -28,7 +28,7 @@
                 <li class="text-xl text-gray-800">
                   <a href="/sport/<%= allSports[i].sports_name %>/sessions" class="text-blue-500 hover:underline"><%= allSports[i].sports_name %></a>
                   <% if(getUser.id === allSports[i].userId) { %>
-                    <a href="/sport/<%= allSports[i].sports_name %>/edit" class="text-sm text-green-500 ml-2 hover:text-green-700">Edit</a><a href="/sport/<%= allSports[i].sports_name %>/delete" class="text-sm text-red-500 ml-2 hover:text-red-700">Delete</a>
+                    <a href="/sport/<%= allSports[i].sports_name %>/edit" class="text-sm text-green-500 ml-2 hover:text-green-700">Edit</a><a href="/sport/<%= allSports[i].id %>/delete" class="text-sm text-red-500 ml-2 hover:text-red-700">Delete</a>
                   <% } %>
                 </li>
               <% } %>
@@ -38,11 +38,12 @@
         <div class="mt-2">
             <ul class="list-disc list-inside pl-4">
               <% for(var i = 0; i < allSports.length; i++) { %>
-                <% if(getUser.id == allSports[i].userId) { %>
+
+                <% if(getUser.id === allSports[i].userId) { %>
                 <li class="text-xl text-gray-800">
                   <a href="/sport/<%= allSports[i].sports_name %>/sessions" class="text-blue-500 hover:underline"><%= allSports[i].sports_name %></a>
                     <a href="/sport/<%= allSports[i].sports_name %>/edit" class="text-sm text-green-500 ml-2 hover:text-green-700">Edit</a>
-                    <a href="/sport/<%= allSports[i].sports_name %>/delete" class="text-sm text-red-500 ml-2 hover:text-red-700">Delete</a>
+                    <a href="/sport/<%= allSports[i].id %>/delete" class="text-sm text-red-500 ml-2 hover:text-red-700">Delete</a>
                 </li>
                 <% } %>
               <% } %>
