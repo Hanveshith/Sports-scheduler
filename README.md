@@ -20,6 +20,8 @@ Players, on the other hand, can effortlessly sign up and sign in using their ema
 ---
 1. All users can change their passwords.
 
+
+---
 **Index Page :**
 ---
 ![Indexpage](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/4c221db8-049c-40ab-a74c-d7760e0ffaa0)
