@@ -31,24 +31,30 @@ Players, on the other hand, can effortlessly sign up and sign in using their ema
 
 **SignUp Page :**
 ---
-![Signup](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/e6781ed0-2c25-46a4-887d-a25b82543c8d)
+![Signup](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/3d7a7049-d16c-4c8c-8988-d3ef8b54d2ef)
+
 
 **Login Page :**
 ---
-![login](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/ceffdbff-aba8-4c79-bb44-97924194ceef)
+![login](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/785445db-f3c3-4ddd-990a-c4b146721329)
+
 
 **Admin Page :**
 ---
-![AdminHomepage](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/4889b64d-7036-4dcf-ad99-c7b38450339c)
+![AdminHomepage](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/d5a65755-9ac2-4a24-a6d4-c8950619491b)
+
 
 **CreateSport Page :**
 ---
-![createsport](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/95b39e43-875b-48de-9bdd-34fbc6a195c0)
+![createsport](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/e89c8b46-5c2d-4265-9f14-7920b4a773a7)
+
 
 **CreateSession Page :**
 ---
-![session](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/fba5f996-2bf7-4f74-8713-d0ea0d9a25fb)
+![session](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/c6c3506e-b09b-45b8-8ad9-e7e1b052f325)
+
 
 **Sessions Page :**
 ---
-![sessions](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/0f2ee3b7-d403-4c58-9d9d-9686b0def4da)
+![sessions](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/f6c2eb79-054e-4975-ade5-6314a11c9cf5)
+
