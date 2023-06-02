@@ -1,4 +1,5 @@
 # Sports-scheduler
+Website-link: https://sports-scheduler-pz9h.onrender.com/
 Sports Scheduler is a web application designed to facilitate the management of sports availability by administrators and enable players to effortlessly create and participate in sport sessions (matches).
 
 The application caters to two primary personas: Administrators and Players, each with their distinct set of features.
@@ -24,7 +25,9 @@ Players, on the other hand, can effortlessly sign up and sign in using their ema
 ---
 **Index Page :**
 ---
-![Indexpage](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/4c221db8-049c-40ab-a74c-d7760e0ffaa0)
+![Indexpage](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/0347f347-50e8-41ac-96a2-5a85419fcafa)
+
+
 
 **SignUp Page :**
 ---
