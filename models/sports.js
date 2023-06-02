@@ -59,10 +59,10 @@ module.exports = (sequelize, DataTypes) => {
     }
 
 
-    static deleteSportByName(name){
+    static deleteSportById(id){
       return this.destroy({
         where:{
-          sports_name: name,
+          id,
         }
       })
     }
