@@ -1,5 +1,7 @@
 # Sports-scheduler
+
 Website-link: https://sports-scheduler-pz9h.onrender.com/
+
 Sports Scheduler is a web application designed to facilitate the management of sports availability by administrators and enable players to effortlessly create and participate in sport sessions (matches).
 
 The application caters to two primary personas: Administrators and Players, each with their distinct set of features.
