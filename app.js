@@ -532,6 +532,7 @@ app.get("/viewreports",connectEnsureLogin.ensureLoggedIn(),async(request,respons
     response.render("reports",{
         usersessions,
         allSports,
+        csrfToken: request.csrfToken(),
     })
 })
 
