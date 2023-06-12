@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Previous Sessions</title>
+</head>
+
+<body>
+    <%- include('header.ejs') %>
+        <div class="container m-auto p-auto my-10 drop-shadow-xl border-4 rounded">
+            <div class="p-4 mt-4 text-lg">
+                <a href="/">Home</a> >
+            </div>
+            <div class="m-4">
+                <h1 class=" text-6xl">
+                    <%= name %>
+                </h1>
+            </div>
+            <div class="m-5">
+                <h1 class="text-2xl">Completed Sessions</h1>
+                <% for(let i=0; i < sessions.length; i++) { %>
+                    <% const currentDate = new Date(); %>
+                    <% const sessionDate = new Date(sessions[i].dataValues.DateTime); %>
+                    <% if (sessionDate < currentDate) { %>
+                        <div class="flex">
+                            <div class="border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
+                                <a href="/sport/<%= sessions[i].dataValues.id %>">
+                                    <%= sessionDate.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session
+                                    #<%= sessions[i].dataValues.id %>
+                                </a>
+                            </div>
+                            <div class="ml-4 mt-6 text-gray-600">
+                                <% if(getUser.id === sessions[i].dataValues.userId) { %>
+                                    <div class="text-xl mt-2 px-2 rounded">( Created by you )</div>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            </div> 
+        </div>
+</body>
+</html>
