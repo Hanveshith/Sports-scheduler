@@ -8,43 +8,49 @@
     <meta name="csrf-token" content="<%= csrfToken %>" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Create Session</title>
-    
+
 </head>
 
 <body>
     <%- include('header.ejs') %>
-    <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
-        <div class="m-5">
-        <div class="mt-4 text-lg">
-            <a href="/">Home</a> ><a href="/createsport">Sport#<%= sport.sports_name %></a> 
-        </div>
+        <div class="container m-auto p-auto my-10 drop-shadow-xl border-4">
+            <div class="m-5">
+                <div class="mt-4 text-lg">
+                    <a href="/">Home</a> ><a href="/createsport">Sport#<%= sport.sports_name %></a>
+                </div>
 
-        <form action="/sport/<%= sport.id %>/createsession" method="post">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <h2 class="text-4xl my-10">Create Session</h2>
-            <div>
-                <label for="dateandtime">Date and Time of session</label>
-            <input type="datetime-local" name="datetime" id="dateandtime" class="border-2 mt-2 p-2 rounded w-60 border-lime-750" min="${new Date().toISOString().slice(0, 16)}"/>
+                <form action="/sport/<%= sport.id %>/createsession" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <h2 class="text-4xl my-10">Create Session</h2>
+                    <div>
+                        <label for="dateandtime">Date and Time of session</label>
+                        <input type="datetime-local" name="datetime" id="dateandtime"
+                            class="border-2 mt-2 p-2 rounded w-60 border-lime-750"
+                            min="${new Date().toISOString().slice(0, 16)}" />
+                    </div>
+                    <div class="mt-2">
+                        <label for="address">Address of session to be held</label><br>
+                        <textarea name="venue" id="address" cols="50" rows="5" placeholder="Enter Adderss"
+                            class="border-2 mt-4 p-2 rounded border-lime-750"></textarea>
+                    </div>
+                    <div>
+                        <label for="playes">Players name joining session(comma seperated)</label>
+                        <input type="text" name="players" id="players" placeholder="Players names"
+                            class="border-2 mt-4 p-2 rounded w-3/6 border-lime-750" />
+                    </div>
+                    <div>
+                        <label for="no_of_playes">Total No. of Players</label>
+                        <input type="number" name="no_of_players" id="no_of_playes"
+                            class="border-2 mt-4 p-2 rounded w-20 border-lime-750" />
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <%- include('flashmessages.ejs') %>
         </div>
-        <div class="mt-2">
-            <label for="address">Address of session to be held</label><br>
-            <textarea name="venue" id="address" cols="50" rows="5" placeholder="Enter Adderss" class="border-2 mt-4 p-2 rounded border-lime-750"></textarea>
-        </div>
-        <div>
-            <label for="playes">Players name joining session(comma seperated)</label>
-            <input type="text" name="players" id="players" placeholder="Players names" class="border-2 mt-4 p-2 rounded w-3/6 border-lime-750"/>
-        </div>
-        <div>
-            <label for="no_of_playes">Total No. of Players</label>
-            <input type="number" name="no_of_players" id="no_of_playes" class="border-2 mt-4 p-2 rounded w-20 border-lime-750"/>
-        </div>
-        <div>
-            <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2">Submit</button>
-        </div>
-    </form>
-    </div>
-    <%- include('flashmessages.ejs') %>
-    </div>
 </body>
 
 </html>
