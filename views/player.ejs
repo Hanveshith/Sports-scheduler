@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<%= csrfToken %>" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Admin</title>
+    <title>Player</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
         <hr>
         <div class="mt-4">
             <h1 class="text-2xl">Available sports</h1>
-            <hr class="my-4">
+            <hr>
             <ul class="list-disc list-inside pl-4">
               <% for(var i = 0; i < allSports.length; i++) { %>
                 <li class="text-xl text-gray-800">
@@ -47,6 +47,8 @@
                 <% } %>
             </ul>
         </div>
+        
+      
         <div class="mt-4">
             <h1 class="text-2xl">Created Sessions</h1>
             <hr class="my-4">
