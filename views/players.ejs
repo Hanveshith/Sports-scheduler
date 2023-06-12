@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="<%= csrfToken %>" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="./css/styles.css" rel="stylesheet">
-    <title>Admin</title>
+    <title>Players</title>
     <script>
         var token = document
             .querySelector('meta[name="csrf-token"]')
@@ -58,8 +58,17 @@
 <body>
     <%- include('header.ejs') %>
     <div class="container m-auto p-auto my-10 drop-shadow-xl border-4 rounded">
+        <div class="py-2 text-red-500 m-5">
+            <% if (messages && messages.length > 0) { %>
+              <ul>
+                <% messages.forEach(function (message) { %>
+                  <li><%= message %></li>
+                <% }) %>
+              </ul>
+            <% } %>
+          </div>
         <div class="mt-4 text-lg p-4">
-            <a href="/">Home</a>
+            <a href="/">Home</a> > <a href="/sport/<%= name %>/sessions">Sessions</a>
         </div>
         <div class="m-5">
             <h1 class=" text-6xl my-10 m-10">Session #<%= sessions.id %></h1>
@@ -82,6 +91,7 @@
                 <% } %>
             </div>
         </div>
+
         <% if(getUser.role === "admin" && sessions.userId == getUser.id && sessions.session_valididty == true) { %>
             <div class="m-5">
                  <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sessions.id %>/editsession">Edit Session</a>
@@ -96,6 +106,6 @@
         <% } %>
 
     </div>
-    
+ 
 </body>
 </html>
