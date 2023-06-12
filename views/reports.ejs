@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,37 +9,39 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Reports</title>
 </head>
+
 <body>
     <%- include('header.ejs') %>
-    <div class="mt-4 text-lg p-4">
-        <a href="/">Home</a>
-    </div>
-    <div class="mt-6 p-5">
-        <h1 class="text-2xl">Created By you</h1>
-        <% for(var i=0; i< allSports.length ;i++) { %>
-            <div class="pt-4 flex-auto m-5">
-                <a>
-                    <li class="text-xl text-gray-800">
-                        <%= allSports[i].sports_name %>
-                    </li>
-                </a>
-            </div>
-        <% } %>
-        <hr>
-    </div>
-    <div class="mt-3 p-5">
-        <h1 class="text-2xl">Canceled Session</h1>
-        <% for(var i=0; i< usersessions.length ;i++) { %>
-            <% if(usersessions[i].session_valididty === false)  { %>
-            <div class="pt-4 flex-auto border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
-                <a href="/sport/<%= usersessions[i].dataValues.id %>">
-                    <%= usersessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session #<%=
-                            usersessions[i].dataValues.id %>
-                </a>
-            </div>
-            <% } %>
-        <% } %>
-        <hr>
-    </div>
+        <div class="mt-4 text-lg p-4">
+            <a href="/">Home</a>
+        </div>
+        <div class="mt-6 p-5">
+            <h1 class="text-2xl">Created By you</h1>
+            <% for(var i=0; i< allSports.length ;i++) { %>
+                <div class="pt-4 flex-auto m-5">
+                    <a>
+                        <li class="text-xl text-gray-800">
+                            <%= allSports[i].sports_name %>
+                        </li>
+                    </a>
+                </div>
+                <% } %>
+                    <hr>
+        </div>
+        <div class="mt-3 p-5">
+            <h1 class="text-2xl">Canceled Session</h1>
+            <% for(var i=0; i< usersessions.length ;i++) { %>
+                <% if(usersessions[i].session_valididty===false) { %>
+                    <div class="pt-4 flex-auto border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
+                        <a href="/sport/<%= usersessions[i].dataValues.id %>">
+                            <%= usersessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %>
+                                Session #<%= usersessions[i].dataValues.id %>
+                        </a>
+                    </div>
+                    <% } %>
+                        <% } %>
+                            <hr>
+        </div>
 </body>
+
 </html>
