@@ -2,72 +2,79 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="<%= csrfToken %>" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Player</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="<%= csrfToken %>" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Player</title>
 </head>
 
 <body>
-    <%- include('header.ejs') %>
+  <%- include('header.ejs') %>
     <div class="container m-auto p-auto ">
-        <div class=" mx-auto pt-2 mt-3 text-4xl flex ">
-            <h1>Welcome <%= getUser.firstName %></h1>
-        </div>
+      <div class=" mx-auto pt-2 mt-3 text-4xl flex ">
+        <h1>Welcome <%= getUser.firstName %>
+        </h1>
+      </div>
+      <hr>
+      <div class="mt-4">
+        <h1 class="text-2xl">Available sports</h1>
         <hr>
-        <div class="mt-4">
-            <h1 class="text-2xl">Available sports</h1>
-            <hr>
-            <ul class="list-disc list-inside pl-4">
-              <% for(var i = 0; i < allSports.length; i++) { %>
-                <li class="text-xl text-gray-800">
-                  <a href="/sport/<%= allSports[i].sports_name %>/sessions" class="text-blue-500 hover:underline"><%= allSports[i].sports_name %></a>
-                  <% if(getUser.id === allSports[i].userId) { %>
-                    <a href="/sport/<%= allSports[i].sports_name %>/edit" class="text-sm text-green-500 ml-2 hover:text-green-700">Edit</a><a href="/sport/<%= allSports[i].sports_name %>/delete" class="text-sm text-red-500 ml-2 hover:text-red-700">Delete</a>
-                  <% } %>
-                </li>
+        <ul class="list-disc list-inside pl-4">
+          <% for(var i=0; i < allSports.length; i++) { %>
+            <li class="text-xl text-gray-800">
+              <a href="/sport/<%= allSports[i].sports_name %>/sessions" class="text-blue-500 hover:underline">
+                <%= allSports[i].sports_name %>
+              </a>
+              <% if(getUser.id===allSports[i].userId) { %>
+                <a href="/sport/<%= allSports[i].sports_name %>/edit"
+                  class="text-sm text-green-500 ml-2 hover:text-green-700">Edit</a><a
+                  href="/sport/<%= allSports[i].sports_name %>/delete"
+                  class="text-sm text-red-500 ml-2 hover:text-red-700">Delete</a>
+                <% } %>
+            </li>
+            <% } %>
+        </ul>
+      </div>
+      <div class="mt-4">
+        <h1 class="text-2xl">Joined Sessions</h1>
+        <hr class="my-4">
+        <ul class="list-disc list-inside pl-4">
+          <% for(let i=0; i < sessions.length; i++) { %>
+            <% if (sessions[i].Participants.includes(getUser.firstName + " " + getUser.lastName)) { %>
+              <div class="border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
+                <a href="/sport/<%= sessions[i].dataValues.Sports_id %>">
+                  <%= sessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session
+                    #<%= sessions[i].dataValues.id %>
+                </a>
+              </div>
               <% } %>
-            </ul>
-        </div>
-        <div class="mt-4">
-            <h1 class="text-2xl">Joined Sessions</h1>
-            <hr class="my-4">
-            <ul class="list-disc list-inside pl-4">
-              <% for(let i=0; i < sessions.length; i++) { %>
-                <% if (sessions[i].Participants.includes(getUser.firstName + " " + getUser.lastName)) { %>
-                <div class="border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
-                    <a href="/sport/<%= sessions[i].dataValues.Sports_id %>">
-                        <%= sessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session
-                            #<%= sessions[i].dataValues.id %>
-                    </a>
-                </div>
                 <% } %>
+        </ul>
+      </div>
+
+
+      <div class="mt-4">
+        <h1 class="text-2xl">Created Sessions</h1>
+        <hr class="my-4">
+        <ul class="list-disc list-inside pl-4">
+          <% for(let i=0; i < sessions.length; i++) { %>
+            <% if (sessions[i].userId===getUser.id) { %>
+              <div class="border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
+                <a href="/sport/<%= sessions[i].dataValues.id %>">
+                  <%= sessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session
+                    #<%= sessions[i].dataValues.id %>
+                </a>
+              </div>
+              <% } %>
                 <% } %>
-            </ul>
-        </div>
-        
-      
-        <div class="mt-4">
-            <h1 class="text-2xl">Created Sessions</h1>
-            <hr class="my-4">
-            <ul class="list-disc list-inside pl-4">
-              <% for(let i=0; i < sessions.length; i++) { %>
-                <% if (sessions[i].userId === getUser.id) { %>
-                <div class="border mt-5 border-gray-950 rounded p-4 mb-4 w-80">
-                    <a href="/sport/<%= sessions[i].dataValues.id %>">
-                        <%= sessions[i].dataValues.DateTime.toLocaleString('en-US', { timeZone: 'UTC' }) %> Session
-                            #<%= sessions[i].dataValues.id %>
-                    </a>
-                </div>
-                <% } %>
-                <% } %>
-            </ul>
-        </div>
+        </ul>
+      </div>
 
 
     </div>
 
 </body>
+
 </html>
