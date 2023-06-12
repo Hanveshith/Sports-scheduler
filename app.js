@@ -275,6 +275,10 @@ app.get(
 
 app.post("/creatingsport", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
     try {
+        if(request.body.sportname === ''){
+            request.flash('error',"Sports cannot be empty");
+            return response.redirect("/createsport");
+        }
         const sport = await Sports.createSport({ sportname: request.body.sportname, userId: request.user.id });
         response.redirect(`/adminsession/${sport.id}`)
     } catch (err) {
@@ -312,18 +316,19 @@ app.post("/sport/:id/createsession", connectEnsureLogin.ensureLoggedIn(), async 
         const players = request.body.players;
         const plyrs = players.split(",").map((p) => p.trim());
         console.log(plyrs);
-        if (plyrs.length > request.body.no_of_players) {
-            request.flash('error', 'Number of player names exceeds the allowed limit.');
-            return response.redirect(`/sport/${request.params.id}/createsession`); 
-        }
-
         const selectedDate = new Date(request.body.datetime);
         const currentDate = new Date();
-
-        if (selectedDate < currentDate) {
+        if((request.body.datetime || request.body.venue || request.body.no_of_players || request.body.players) === ''){
+            request.flash('error', 'All fields must be filled');
+            return response.redirect(`/sport/${request.params.id}/createsession`);
+        }else if (plyrs.length > request.body.no_of_players) {
+            request.flash('error', 'Number of player names exceeds the allowed limit.');
+            return response.redirect(`/sport/${request.params.id}/createsession`); 
+        }else if (selectedDate < currentDate) {
             request.flash('error', 'Selected date is in the past.');
             return response.redirect(`/sport/${request.params.id}/createsession`);
         }
+        
         const session = await Session.createSession({
             datetime: request.body.datetime,
             venue: request.body.venue,
@@ -393,17 +398,17 @@ app.post("/sport/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (r
         const players = request.body.players;
         const plyrs = players.split(",").map((p) => p.trim());
         console.log(plyrs);
-        if (plyrs.length > request.body.no_of_players) {
-            request.flash('error', 'Number of player names exceeds the allowed limit.');
-            return response.redirect(`/sport/${request.params.id}/editsession`); 
-        }
-
         const selectedDate = new Date(request.body.datetime);
         const currentDate = new Date();
-
-        if (selectedDate < currentDate) {
+        if((request.body.datetime || request.body.venue || request.body.no_of_players || request.body.players) === ''){
+            request.flash('error', 'All fields must be filled');
+            return response.redirect(`/sport/${request.params.id}/createsession`);
+        }else if (plyrs.length > request.body.no_of_players) {
+            request.flash('error', 'Number of player names exceeds the allowed limit.');
+            return response.redirect(`/sport/${request.params.id}/createsession`); 
+        }else if (selectedDate < currentDate) {
             request.flash('error', 'Selected date is in the past.');
-            return response.redirect(`/sport/${request.params.id}/editsession`);
+            return response.redirect(`/sport/${request.params.id}/createsession`);
         }
         const session = await Session.editSession({
             datetime: request.body.datetime,
@@ -505,6 +510,7 @@ app.get("/sport/:name/edit", connectEnsureLogin.ensureLoggedIn(), async (request
         const sport = await Sports.getSportByName(request.params.name);
         response.render("EditSport", {
             sport,
+            messages: request.flash('error'),
             csrfToken: request.csrfToken(),
         });
         console.log(sport);
@@ -516,6 +522,10 @@ app.get("/sport/:name/edit", connectEnsureLogin.ensureLoggedIn(), async (request
 app.post("/sport/:name/edit", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
     try {
         const new_name = request.body.sportname;
+        if(request.body.sportname === ''){
+            request.flash('error',"Sports cannot be empty");
+            return response.redirect(`/sport/${request.params.name}/edit`);
+        }
         const updatedsport = await Sports.editSport(new_name, request.params.name);
         console.log(updatedsport);
         // response.render("admin",{
