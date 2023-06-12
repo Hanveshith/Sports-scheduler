@@ -200,13 +200,13 @@ app.get(
     connectEnsureLogin.ensureLoggedIn(),
     async (request, response) => {
         console.log(request.user.id);
-        const allSports = await Sports.findAll();
-        const avbSports = await Sports.getAllSports();
+        const allSports = await Sports.getAllSports();
         const getUser = await User.getUser(request.user.id);
+        const sessions = await Session.findAll();
         console.log(allSports);
         if (request.accepts("HTML")) {
             response.render("admin", {
-                avbSports,
+                sessions,
                 getUser,
                 allSports,
                 csrfToken: request.csrfToken(),
@@ -286,7 +286,11 @@ app.get("/adminsession/:id",connectEnsureLogin.ensureLoggedIn(),async(request,re
         const getUser = await User.getUser(request.user.id);
         const allSports = await Sports.getAllSports();
         const sport = await Sports.findByPk(request.params.id);
+        const sportn = await Sports.getSportByName(sport.sports_name);
+        const Sessions = await Session.getSession({ sportId: [...sportn.map(s => s.dataValues.id)] });
+        console.log(sport,sport.id,Sessions)
         response.render("adminsessions", {
+            sessions: Sessions,
             sport,
             getUser,
             allSports,
@@ -308,6 +312,18 @@ app.post("/sport/:id/createsession", connectEnsureLogin.ensureLoggedIn(), async 
         const players = request.body.players;
         const plyrs = players.split(",").map((p) => p.trim());
         console.log(plyrs);
+        if (plyrs.length > request.body.no_of_players) {
+            request.flash('error', 'Number of player names exceeds the allowed limit.');
+            return response.redirect(`/sport/${request.params.id}/createsession`); 
+        }
+
+        const selectedDate = new Date(request.body.datetime);
+        const currentDate = new Date();
+
+        if (selectedDate < currentDate) {
+            request.flash('error', 'Selected date is in the past.');
+            return response.redirect(`/sport/${request.params.id}/createsession`);
+        }
         const session = await Session.createSession({
             datetime: request.body.datetime,
             venue: request.body.venue,
@@ -331,19 +347,25 @@ app.get("/sport/:id", connectEnsureLogin.ensureLoggedIn(), async (request, respo
         // const sport = await Sports.findByPk(request.params.id);
         // const session = await Session.getSession({ sportId: sport.id });
         const session = await Session.findByPk(request.params.id);
-        // const sport = await Sports.getSportById(session.Sports_id);
-        
+        const sport = await Sports.getSportById(session.Sports_id);
+        const name = getUser.firstName +" "+ getUser.lastName ;
         console.log(session);
-        // console.log(sport);
+        // console.log(sport[0].dataValues.sports_name);
         console.log(getUser);
+        if (session.Participants.includes(name)) {
+            request.flash("error", "Participant already exists in the session");
+          } else if (session.Participants.length === session.no_of_players) {
+            request.flash("error", "Session is full");
+          } else if (!session.Participants.includes(name)) {
+            request.flash('error','Participant does not exist in the session');
+        }
         response.render("players", {
             // sportID: sport.id,
-            // name: sport.sports_name,
+            name: sport[0].dataValues.sports_name,
             getUser,
             // sport,
             sessions: session,
-            messages: request.flash("error"), // Pass the flash error messages to the template
-
+            messages: request.flash('error'),
             csrfToken: request.csrfToken(),
         });
     } catch (err) {
@@ -371,6 +393,18 @@ app.post("/sport/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (r
         const players = request.body.players;
         const plyrs = players.split(",").map((p) => p.trim());
         console.log(plyrs);
+        if (plyrs.length > request.body.no_of_players) {
+            request.flash('error', 'Number of player names exceeds the allowed limit.');
+            return response.redirect(`/sport/${request.params.id}/editsession`); 
+        }
+
+        const selectedDate = new Date(request.body.datetime);
+        const currentDate = new Date();
+
+        if (selectedDate < currentDate) {
+            request.flash('error', 'Selected date is in the past.');
+            return response.redirect(`/sport/${request.params.id}/editsession`);
+        }
         const session = await Session.editSession({
             datetime: request.body.datetime,
             venue: request.body.venue,
@@ -433,25 +467,12 @@ app.post("/joinSession/:id", connectEnsureLogin.ensureLoggedIn(), async (request
       const sport1 = await Sports.findByPk(sessions.Sports_id);
       console.log("j", sessions);
       console.log(sessions.Participants);
-  
-      if (sessions.Participants.includes(name)) {
-        request.flash("error", "Participant already exists in the session");
-        request.session.save(() => {
-          return response.redirect("back");
-        });
-      } else if (sessions.Participants.length === sessions.no_of_players) {
-        request.flash("error", "Session is full");
-        request.session.save(() => {
-          return response.redirect("back");
-        });
-      } else {
+      if(!sessions.Participants.includes(name) && sessions.Participants.length < sessions.no_of_players){
         sessions.Participants.push(name);
         const s = await Session.joinSession({ id: request.params.id, participants: sessions.Participants });
   
-        const sport = await Sports.findByPk(s.Sports_id);
-        request.session.save(() => {
+        // const sport = await Sports.findByPk(s.Sports_id);
           return response.redirect(`/sport/${request.params.id}`);
-        });
       }
     } catch (err) {
       console.log(err);
@@ -466,12 +487,6 @@ app.post("/leaveSession/:id", connectEnsureLogin.ensureLoggedIn(), async (reques
         const name = getUser.firstName+" " +getUser.lastName ;
         // console.log("j",sessions)
         // console.log(sessions.Participants);
-        if (!sessions.Participants.includes(name)) {
-            request.flash('error','Participant does not exist in the session');
-            console.log(request.flash('error'))
-            return response.redirect('back');
-        }
-        else{
             const updatedParticipants = sessions.Participants.filter(
                 (participant) => participant !== name
             );
@@ -480,7 +495,6 @@ app.post("/leaveSession/:id", connectEnsureLogin.ensureLoggedIn(), async (reques
             // console.log("n",s);
             // console.log(sport)
             return response.redirect(`/sport/${request.params.id}`);
-        }
     } catch (err) {
         console.log(err);
     }
@@ -514,11 +528,12 @@ app.post("/sport/:name/edit", connectEnsureLogin.ensureLoggedIn(), async (reques
     }
 })
 
-app.get("/sport/:id/delete", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
+app.get("/sport/:name/delete", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
     try {
-        const sport = await Sports.findByPk(request.params.id);
-        await Sports.deleteSportById(request.params.id);
-        await Session.deleteSessionBySportId({ sportId: sport.id})
+        const sport = await Sports.getSportByName(request.params.name);
+        console.log(sport)
+        await Sports.deleteSportById([...sport.map(s => s.dataValues.id)]);
+        await Session.deleteSessionBySportId({ sportId: [...sport.map(s => s.dataValues.id)] })
         response.redirect("/admin");
     } catch (err) {
         console.log(err);
@@ -536,5 +551,16 @@ app.get("/viewreports",connectEnsureLogin.ensureLoggedIn(),async(request,respons
     })
 })
 
+app.get("/sport/:name/previousSession",connectEnsureLogin.ensureLoggedIn(),async(request,response) => {
+    const sport = await Sports.getSportByName(request.params.name);
+    const Sessions = await Session.getSession({ sportId: [...sport.map(s => s.dataValues.id)] });
+    const getUser = await User.getUser(request.user.id);
+    response.render("previousSessions",{
+        getUser,
+        sessions: Sessions,
+        name: request.params.name,
+        csrfToken: request.csrfToken(),
+    })
+})
 
 module.exports = app;
