@@ -6,25 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>Admin</title>
+    <title>Edit Sport</title>
 </head>
 
 <body>
     <%- include('header.ejs') %>
-    <div class="container m-auto p-auto ">
-        <div class="mt-10">
-            <a href="/">Home</a> >
+        <div class="container m-auto p-auto ">
+            <div class="mt-10">
+                <a href="/">Home</a> >
+            </div>
+            <h2 class="text-3xl text-center mt-10">Edit Sport</h2>
+            <div class="text-center flex-col my-4">
+                <form action="/sport/<%= sport[0].sports_name %>/edit" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <label for="inputsports">Enter Sports Name</label>
+                    <input type="text" name="sportname" id="inputsports" value="<%= sport[0].sports_name %>"
+                        class="border border-gray-300  text-gray-900 rounded p-2 w-3/6"
+                        placeholder="Enter sports name" />
+                    <button type="submit"
+                        class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2 my-5">Submit</button>
+                </form>
+            </div>
+            <%- include('flashmessages.ejs') %>
         </div>
-        <h2 class="text-3xl text-center mt-10">Edit Sport</h2>
-        <div class="text-center flex-col my-4">
-            <form action="/sport/<%= sport[0].sports_name %>/edit" method="post">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                <label for="inputsports">Enter Sports Name</label>
-                <input type="text" name="sportname" id="inputsports" value="<%= sport[0].sports_name %>" class="border border-gray-300  text-gray-900 rounded p-2 w-3/6" placeholder="Enter sports name"/>
-                <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2 my-5">Submit</button>
-            </form>
-        </div>
-    </div>
 </body>
 
 </html>
