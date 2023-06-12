@@ -13,41 +13,41 @@
         var token = document
             .querySelector('meta[name="csrf-token"]')
             .getAttribute("content");
-        function cancelSession(id){
-            fetch(`/cancelsession/${id}`,{
+        function cancelSession(id) {
+            fetch(`/cancelsession/${id}`, {
                 method: "post",
-                headers: {"content-Type": "application/json"},
+                headers: { "content-Type": "application/json" },
                 body: JSON.stringify({
                     "_csrf": token
                 })
             }).then((res) => {
-                if(res.ok){
+                if (res.ok) {
                     window.location.href = "/admin"
                 }
             }).catch((err) => console.log(err))
         }
-        function JoinSession(id){
-            fetch(`/joinSession/${id}`,{
+        function JoinSession(id) {
+            fetch(`/joinSession/${id}`, {
                 method: "post",
-                headers: {"content-Type": "application/json"},
+                headers: { "content-Type": "application/json" },
                 body: JSON.stringify({
                     "_csrf": token
                 })
             }).then((res) => {
-                if(res.ok){
+                if (res.ok) {
                     window.location.reload();
                 }
             }).catch((err) => console.log(err))
         }
-        function LeaveSession(id){
-            fetch(`/leaveSession/${id}`,{
+        function LeaveSession(id) {
+            fetch(`/leaveSession/${id}`, {
                 method: "post",
-                headers: {"content-Type": "application/json"},
+                headers: { "content-Type": "application/json" },
                 body: JSON.stringify({
                     "_csrf": token
                 })
             }).then((res) => {
-                if(res.ok){
+                if (res.ok) {
                     window.location.reload();
                 }
             }).catch((err) => console.log(err))
@@ -57,55 +57,69 @@
 
 <body>
     <%- include('header.ejs') %>
-    <div class="container m-auto p-auto my-10 drop-shadow-xl border-4 rounded">
-        <div class="py-2 text-red-500 m-5">
-            <% if (messages && messages.length > 0) { %>
-              <ul>
-                <% messages.forEach(function (message) { %>
-                  <li><%= message %></li>
-                <% }) %>
-              </ul>
-            <% } %>
-          </div>
-        <div class="mt-4 text-lg p-4">
-            <a href="/">Home</a> > <a href="/sport/<%= name %>/sessions">Sessions</a>
-        </div>
-        <div class="m-5">
-            <h1 class=" text-6xl my-10 m-10">Session #<%= sessions.id %></h1>
-            <div class="my-10 text-2xl m-10">
-                <p>Date and Time: <%= sessions.DateTime %></p>
-                <p>Venue: <%= sessions.Venue %></p>
+        <div class="container m-auto p-auto my-10 drop-shadow-xl border-4 rounded">
+            <div class="py-2 text-red-500 m-5">
+                <% if (messages && messages.length> 0) { %>
+                    <ul>
+                        <% messages.forEach(function (message) { %>
+                            <li>
+                                <%= message %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } %>
             </div>
-            <div>
-                <div class="flex">
-                    <p class="text-4xl px-4">Players</p> 
-                    <p class="text-2xl mt-2 border-2 px-2 rounded "><%= sessions.no_of_players-sessions.Participants.length %> Slots</p>
-                </div>
-                <% for(var i=0;i< sessions.Participants.length;i++) { %>
-                    <div class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-50">
-                        <div class="flex items-center">
-                            <p class="ml-2 players text-xl text-gray-900 "><%= i+1 %>. <%= sessions.Participants[i] %></p>
-
-                        </div>
-                    </div>
-                <% } %>
+            <div class="mt-4 text-lg p-4">
+                <a href="/">Home</a> > <a href="/sport/<%= name %>/sessions">Sessions</a>
             </div>
-        </div>
-
-        <% if(getUser.role === "admin" && sessions.userId == getUser.id && sessions.session_valididty == true) { %>
             <div class="m-5">
-                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="/sport/<%= sessions.id %>/editsession">Edit Session</a>
-                 <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#" onclick="cancelSession(<%= sessions.id %>)">Cancel Session</a>
-            </div>
-            <% }%>
-        <% if(sessions.session_valididty == true) { %>     
-                <div class="m-5">
-                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="JoinSession(<%= sessions.id %>)" >Join Session</a>
-                     <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" onclick="LeaveSession(<%= sessions.id %>)" >Leave Session</a>
+                <h1 class=" text-6xl my-10 m-10">Session #<%= sessions.id %>
+                </h1>
+                <div class="my-10 text-2xl m-10">
+                    <p>Date and Time: <%= sessions.DateTime %>
+                    </p>
+                    <p>Venue: <%= sessions.Venue %>
+                    </p>
                 </div>
-        <% } %>
+                <div>
+                    <div class="flex">
+                        <p class="text-4xl px-4">Players</p>
+                        <p class="text-2xl mt-2 border-2 px-2 rounded ">
+                            <%= sessions.no_of_players-sessions.Participants.length %> Slots
+                        </p>
+                    </div>
+                    <% for(var i=0;i< sessions.Participants.length;i++) { %>
+                        <div class="flex items-center w-fit my-2 px-2 py-1 rounded hover:bg-purple-50">
+                            <div class="flex items-center">
+                                <p class="ml-2 players text-xl text-gray-900 ">
+                                    <%= i+1 %>. <%= sessions.Participants[i] %>
+                                </p>
 
-    </div>
- 
+                            </div>
+                        </div>
+                        <% } %>
+                </div>
+            </div>
+
+            <% if(getUser.role==="admin" && sessions.userId==getUser.id && sessions.session_valididty==true) { %>
+                <div class="m-5">
+                    <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2"
+                        href="/sport/<%= sessions.id %>/editsession">Edit Session</a>
+                    <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2" href="#"
+                        onclick="cancelSession(<%= sessions.id %>)">Cancel Session</a>
+                </div>
+                <% }%>
+                    <% if(sessions.session_valididty==true) { %>
+                        <div class="m-5">
+                            <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2"
+                                onclick="JoinSession(<%= sessions.id %>)">Join Session</a>
+                            <a href="#" class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2"
+                                onclick="LeaveSession(<%= sessions.id %>)">Leave Session</a>
+                        </div>
+                        <% } %>
+
+        </div>
+
 </body>
+
 </html>
