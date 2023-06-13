@@ -17,7 +17,7 @@
                     home
                 </div>
 
-                <form action="/sport/<%=sessions.id%>/editSession" method="post">
+                <form action="/sportsession/<%=sessions.id%>/editSession" method="post">
                     <input type="text" name="_csrf" value="<%= csrfToken %>" hidden>
                     <input type="text" name="sportid" value="<%= sport.id %>" hidden />
                     <h2 class="text-4xl my-10">Edit Session</h2>
