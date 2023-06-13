@@ -60,4 +60,3 @@ Players, on the other hand, can effortlessly sign up and sign in using their ema
 ---
 ![sessions](https://github.com/Hanveshith/Sports-scheduler/assets/110842917/f6c2eb79-054e-4975-ade5-6314a11c9cf5)
 
-Demo video - https://www.loom.com/share/10e65763533c42e69655934a8c86a476?sid=39d50752-66c7-4bef-a8aa-ae9541172491
