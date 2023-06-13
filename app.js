@@ -255,10 +255,10 @@ app.post("/changingpassword",connectEnsureLogin.ensureLoggedIn(),async(request,r
         const hashedpwd = await bcrypt.hash(request.body.newpassword, saltRounds);
         await User.updatePassword(hashedpwd,request.user.id);
         request.flash('success', 'Password changed successfully');
-        return response.redirect(`/`);
+        return response.redirect("/");
     }else{
         request.flash('error', 'Invalid old password');
-        return response.redirect(`/changepassword`);
+        return response.redirect("/changepassword");
     }
 })
 
@@ -379,7 +379,7 @@ app.get("/sport/:id", connectEnsureLogin.ensureLoggedIn(), async (request, respo
 })
 
 
-app.get("/sport/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
+app.get("/sportsession/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
     const session = await Session.findByPk(request.params.id);
     console.log(session);
     console.log(session.Sports_id)
@@ -393,7 +393,7 @@ app.get("/sport/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (re
     });
 })
 
-app.post("/sport/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
+app.post("/sportsession/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
     try {
         const players = request.body.players;
         const plyrs = players.split(",").map((p) => p.trim());
@@ -402,13 +402,13 @@ app.post("/sport/:id/editsession", connectEnsureLogin.ensureLoggedIn(), async (r
         const currentDate = new Date();
         if((request.body.datetime || request.body.venue || request.body.no_of_players || request.body.players) === ''){
             request.flash('error', 'All fields must be filled');
-            return response.redirect(`/sport/${request.params.id}/createsession`);
+            return response.redirect(`/sportsession/${request.params.id}/editsession`);
         }else if (plyrs.length > request.body.no_of_players) {
             request.flash('error', 'Number of player names exceeds the allowed limit.');
-            return response.redirect(`/sport/${request.params.id}/createsession`); 
+            return response.redirect(`/sportsession/${request.params.id}/editsession`); 
         }else if (selectedDate < currentDate) {
             request.flash('error', 'Selected date is in the past.');
-            return response.redirect(`/sport/${request.params.id}/createsession`);
+            return response.redirect(`/sportsession/${request.params.id}/editsession`);
         }
         const session = await Session.editSession({
             datetime: request.body.datetime,
@@ -465,7 +465,7 @@ app.get("/sport/:name/sessions", connectEnsureLogin.ensureLoggedIn(), async (req
 
 
 app.post("/joinSession/:id", connectEnsureLogin.ensureLoggedIn(), async (request, response) => {
-    try {
+    try {  
       const sessions = await Session.findByPk(request.params.id);
       const getUser = await User.getUser(request.user.id);
       const name = getUser.firstName +" "+ getUser.lastName ;
@@ -554,7 +554,9 @@ app.get("/sport/:name/delete", connectEnsureLogin.ensureLoggedIn(), async (reque
 app.get("/viewreports",connectEnsureLogin.ensureLoggedIn(),async(request,response) => {
     const usersessions = await Session.getSessionByUserId(request.user.id);
     const allSports = await Sports.getAllSports();
+    const getUser = await User.getUser(request.user.id);
     response.render("reports",{
+        getUser,
         usersessions,
         allSports,
         csrfToken: request.csrfToken(),
