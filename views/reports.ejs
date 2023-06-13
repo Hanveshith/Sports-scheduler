@@ -18,6 +18,8 @@
         <div class="mt-6 p-5">
             <h1 class="text-2xl">Created By you</h1>
             <% for(var i=0; i< allSports.length ;i++) { %>
+                <% if(getUser.id === allSports[i].userId) { %>
+                    
                 <div class="pt-4 flex-auto m-5">
                     <a>
                         <li class="text-xl text-gray-800">
@@ -25,6 +27,7 @@
                         </li>
                     </a>
                 </div>
+                <% } %>
                 <% } %>
                     <hr>
         </div>
