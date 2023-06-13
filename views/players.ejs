@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <% if(getUser.role==="admin" && sessions.userId==getUser.id && sessions.session_valididty==true) { %>
+            <% if((getUser.role==="admin" || sessions.userId==getUser.id) && sessions.session_valididty==true) { %>
                 <div class="m-5">
                     <a class="text-white bg-blue-600 hover:bg-blue-800 font-medium rounded px-5 py-2"
                         href="/sportsession/<%= sessions.id %>/editsession">Edit Session</a>
